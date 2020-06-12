@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "424006321015",
+    "firebase_url": "https://softcod-cliente.firebaseio.com",
+    "project_id": "softcod-cliente",
+    "storage_bucket": "softcod-cliente.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:424006321015:android:11f21586a51912054f5772",
+        "android_client_info": {
+          "package_name": "com.softcod.plataformacliente"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "424006321015-dggugikvq1563a8ovtsrkcevhe4gtv7l.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCuNu9cW1jAD-Uk04TqRJ7YVRgMQODSPeM"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "424006321015-dggugikvq1563a8ovtsrkcevhe4gtv7l.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
