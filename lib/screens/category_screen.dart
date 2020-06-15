@@ -15,7 +15,7 @@ class CategoryScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          title: Text(snapshot.data["TITULO"]),
+          title: Text(snapshot.data["titulo"]),
           centerTitle: true,
           bottom: TabBar(
             indicatorColor: Colors.white,
@@ -26,8 +26,9 @@ class CategoryScreen extends StatelessWidget {
           ),
         ),
         body: FutureBuilder<QuerySnapshot>(
-          future: Firestore.instance.collection("produtos").document(snapshot.documentID)
-            .collection("itens").getDocuments(),
+          future: Firestore.instance
+              .collection("produtos").document(snapshot.documentID)
+              .collection("itens").getDocuments(),
             builder: (context, snapshot){
               if(!snapshot.hasData)
                 return Center(child: CircularProgressIndicator(),);
@@ -41,13 +42,14 @@ class CategoryScreen extends StatelessWidget {
                             crossAxisCount: 2,
                             mainAxisSpacing: 4.0,
                             crossAxisSpacing: 4.0,
-                            childAspectRatio: 0.65,
+                            childAspectRatio: 0.65, //divide a altura com a largura
                           ),
                           itemCount: snapshot.data.documents.length,
                           itemBuilder: (context, index){
-                            ProductData data = ProductData.fromDocument(snapshot.data.documents[index]);
-                            data.category = this.snapshot.documentID;
-                            return ProductTile("grid", data);
+                            ProductData data =
+                            ProductData.fromDocument(snapshot.data.documents[index]);
+                            data.categoria = this.snapshot.documentID;
+                            return ProductTile("grade", data);
                           }
                       ),
                       ListView.builder(
@@ -55,8 +57,8 @@ class CategoryScreen extends StatelessWidget {
                           itemCount: snapshot.data.documents.length,
                           itemBuilder: (context, index){
                             ProductData data = ProductData.fromDocument(snapshot.data.documents[index]);
-                            data.category = this.snapshot.documentID;
-                            return ProductTile("list", data);
+                            data.categoria = this.snapshot.documentID;
+                            return ProductTile("lista", data);
                           }
                       )
                     ]

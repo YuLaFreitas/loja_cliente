@@ -23,7 +23,7 @@ class CartTile extends StatelessWidget {
             padding: EdgeInsets.all(8.0),
             width: 120.0,
             child: Image.network(
-              cartProduct.productData.images[0],
+              cartProduct.productData.img[0],
               fit: BoxFit.cover,
             ),
           ),
@@ -35,7 +35,7 @@ class CartTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: <Widget>[
                   Text(
-                    cartProduct.productData.title,
+                    cartProduct.productData.titulo,
                     style: TextStyle(fontWeight: FontWeight.w500, fontSize: 17.0),
                   ),
                   Text(
@@ -43,7 +43,7 @@ class CartTile extends StatelessWidget {
                     style: TextStyle(fontWeight: FontWeight.w300),
                   ),
                   Text(
-                    "R\$ ${cartProduct.productData.price.toStringAsFixed(2)}",
+                    "R\$ ${cartProduct.productData.valor.toStringAsFixed(2)}",
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                       fontSize: 16.0,

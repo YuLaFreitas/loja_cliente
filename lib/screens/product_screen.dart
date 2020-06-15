@@ -32,7 +32,7 @@ class _ProductScreenState extends State<ProductScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text(product.title),
+        title: Text(product.titulo),
         centerTitle: true,
       ),
       body: ListView(
@@ -40,14 +40,15 @@ class _ProductScreenState extends State<ProductScreen> {
           AspectRatio(
             aspectRatio: 0.9,
             child: Carousel(
-              images: product.images.map((url){
+              images: product.img.map((url){
                 return NetworkImage(url);
               }).toList(),
               dotSize: 4.0,
               dotSpacing: 15.0,
               dotBgColor: Colors.transparent,
               dotColor: primaryColor,
-              autoplay: false,
+              autoplay: true,
+              autoplayDuration: Duration(milliseconds: 5000),
             ),
           ),
           Padding(
@@ -56,7 +57,7 @@ class _ProductScreenState extends State<ProductScreen> {
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: <Widget>[
                 Text(
-                  product.title,
+                  product.titulo,
                   style: TextStyle(
                     fontSize: 20.0,
                     fontWeight: FontWeight.w500
@@ -64,7 +65,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   maxLines: 3,
                 ),
                 Text(
-                  "R\$ ${product.price.toStringAsFixed(2)}",
+                  "R\$ ${product.valor.toStringAsFixed(2)}",
                   style: TextStyle(
                     fontSize: 22.0,
                     fontWeight: FontWeight.bold,
@@ -89,7 +90,7 @@ class _ProductScreenState extends State<ProductScreen> {
                           mainAxisSpacing: 8.0,
                           childAspectRatio: 0.5
                       ),
-                    children: product.sizes.map(
+                    children: product.tam.map(
                       (s){
                         return GestureDetector(
                           onTap: (){
@@ -126,7 +127,7 @@ class _ProductScreenState extends State<ProductScreen> {
                         cartProduct.size = size;
                         cartProduct.quantity = 1;
                         cartProduct.pid = product.id;
-                        cartProduct.category = product.category;
+                        cartProduct.category = product.categoria;
                         cartProduct.productData = product;
 
                         CartModel.of(context).addCartItem(cartProduct);
@@ -158,7 +159,7 @@ class _ProductScreenState extends State<ProductScreen> {
                   ),
                 ),
                 Text(
-                  product.description,
+                  product.descricao,
                   style: TextStyle(
                     fontSize: 16.0
                   ),

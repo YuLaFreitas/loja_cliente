@@ -77,7 +77,7 @@ class CartModel extends Model {
     double price = 0.0;
     for(CartProduct c in products){
       if(c.productData != null)
-        price += c.quantity * c.productData.price;
+        price += c.quantity * c.productData.valor;
     }
     return price;
   }

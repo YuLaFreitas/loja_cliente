@@ -1,32 +1,35 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 
 class ProductData {
 
-  String category;
+  String categoria;
   String id;
 
-  String title;
-  String description;
+  String titulo;
+  String descricao;
 
-  double price;
+  double valor;
 
-  List images;
-  List sizes;
+  List img;
+  List tam;
 
   ProductData.fromDocument(DocumentSnapshot snapshot){
     id = snapshot.documentID;
-    title = snapshot.data["titulo"];
-    description = snapshot.data["descricao"];
-    price = snapshot.data["valor"] + 0.0;
-    images = snapshot.data["img"];
-    sizes = snapshot.data["tamanho"];
+    titulo = snapshot.data["TITULO"];
+    descricao = snapshot.data["descricao"];
+    valor = snapshot.data["valor"];
+    valor.floorToDouble();// testar = ##,##
+    img = snapshot.data["img"];
+    tam = snapshot.data["tam"];
   }
 
   Map<String, dynamic> toResumedMap(){
     return {
-      "titulo": title,
-      "descricao": description,
-      "preco": price
+      "titulo": titulo,
+      "descricao": descricao,
+      "valor": valor
     };
   }
 

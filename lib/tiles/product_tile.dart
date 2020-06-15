@@ -17,15 +17,16 @@ class ProductTile extends StatelessWidget {
         );
       },
       child: Card(
-          child: type == "grid"
+          child: type == "grade"
               ? Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   mainAxisAlignment: MainAxisAlignment.start,
-                  children: <Widget>[
-                    AspectRatio(
-                      aspectRatio: 0.8,
+                  children:
+                  <Widget>[
+                   AspectRatio(
+                      aspectRatio: 0.8, //largura por altura
                       child: Image.network(
-                        product.images[0],
+                        product.img[0],
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -35,11 +36,13 @@ class ProductTile extends StatelessWidget {
                         child: Column(
                           children: <Widget>[
                             Text(
-                              product.title,
-                              style: TextStyle(fontWeight: FontWeight.w500),
+                              product.titulo,
+                              style: TextStyle(
+                                  fontWeight: FontWeight.w500
+                              ),
                             ),
                             Text(
-                              "R\$ ${product.price.toStringAsFixed(2)}",
+                              "R\$ ${product.valor.toStringAsFixed(2)}",
                               style: TextStyle(
                                   color: Theme.of(context).primaryColor,
                                   fontSize: 17.0,
@@ -51,12 +54,13 @@ class ProductTile extends StatelessWidget {
                     )
                   ],
                 )
+             //se for "list" =>
               : Row(
             children: <Widget>[
               Flexible(
                 flex: 1,
                 child: Image.network(
-                  product.images[0],
+                  product.img[0],
                   fit: BoxFit.cover,
                   height: 250.0,
                 ),
@@ -69,11 +73,11 @@ class ProductTile extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: <Widget>[
                       Text(
-                        product.title,
+                        product.titulo,
                         style: TextStyle(fontWeight: FontWeight.w500),
                       ),
                       Text(
-                        "R\$ ${product.price.toStringAsFixed(2)}",
+                        "R\$ ${product.valor.toStringAsFixed(2)}",
                         style: TextStyle(
                             color: Theme.of(context).primaryColor,
                             fontSize: 17.0,
