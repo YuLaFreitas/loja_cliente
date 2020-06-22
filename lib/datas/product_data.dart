@@ -17,7 +17,7 @@ class ProductData {
 
   ProductData.fromDocument(DocumentSnapshot snapshot){
     id = snapshot.documentID;
-    titulo = snapshot.data["TITULO"];
+    titulo = snapshot.data["titulo"];
     descricao = snapshot.data["descricao"];
     valor = snapshot.data["valor"];
     valor.floorToDouble();// testar = ##,##

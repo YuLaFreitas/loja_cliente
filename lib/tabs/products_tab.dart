@@ -6,26 +6,29 @@ class ProductsTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return FutureBuilder<QuerySnapshot>(
-      future: Firestore.instance.collection("produtos").getDocuments(),
+      future: Firestore.instance
+          .collection("produtos")
+          .getDocuments(),
       builder: (context, snapshot) {
         if (!snapshot.hasData)
           return Center(
             child: CircularProgressIndicator(),
           );
         else {
-          var dividedTiles = ListTile
+          var dividedTiles =
+          ListTile
               .divideTiles(
-                  tiles: snapshot.data.documents.map((doc) {
-                    return CategoryTile(doc);
-                  }).toList(),
-                  color: Colors.grey[800])
+            tiles: snapshot.data.documents.map((doc) {
+              return CategoryTile(doc);
+            }).toList(),
+            color: Colors.grey[800],)
               .toList();
 
           return ListView(
-            children: dividedTiles,
-          );
-        }
-      },
-    );
+                children: dividedTiles
+              );
+            }
+          },
+       );
+    }
   }
-}

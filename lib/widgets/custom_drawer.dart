@@ -12,19 +12,19 @@ class CustomDrawer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
-    Widget _buildDrawerBack() => Container(
-      decoration: BoxDecoration(
-          gradient: LinearGradient(
-              colors: [
-                Color.fromARGB(255, 203, 236, 241),
-                Colors.white
-              ],
-              begin: Alignment.topCenter,
-              end: Alignment.bottomCenter
-          )
-      ),
-    );
+    Widget _buildDrawerBack() =>
+        Container(
+          decoration: BoxDecoration(
+              gradient: LinearGradient(
+                  colors: [
+                    Color.fromARGB(255, 203, 236, 241),
+                    Colors.white
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter
+              )
+          ),
+        );
 
     return Drawer(
       child: Stack(
@@ -42,56 +42,63 @@ class CustomDrawer extends StatelessWidget {
                     Positioned(
                       top: 8.0,
                       left: 0.0,
-                      child: Text("BoloMenezes",
-                        style: TextStyle(fontSize: 30.0, fontWeight: FontWeight.bold),
+                      child: Text("Griff Modas",
+                        style: TextStyle(
+                            fontSize: 30.0, fontWeight: FontWeight.bold),
                       ),
                     ),
                     Positioned(
                       top: 40.0,
                       left: 10.0,
-                      child: Text("seus melhores momentos, \n o melhor sabor",
-                        style: TextStyle(fontSize: 15.0, fontWeight: FontWeight.bold,
-                        fontStyle: FontStyle.italic),
+                      child: Text("A moda é aqui",
+                        style: TextStyle(
+                            fontSize: 15.0, fontWeight: FontWeight.bold,
+                            fontStyle: FontStyle.italic),
                       ),
                     ),
                     Positioned(
-                      left: 0.0,
-                      bottom: 0.0,
-                      child: ScopedModelDescendant<UserModel>(
-                        builder: (context, child, model){
-                          return Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: <Widget>[
-                              Text("Olá, ${!model.isLoggedIn() ? "" : model.userData["name"]}",
-                                style: TextStyle(
-                                    fontSize: 18.0,
-                                    fontWeight: FontWeight.bold
-                                ),
-                              ),
-                              GestureDetector(
-                                child: Text(
-                                  !model.isLoggedIn() ?
-                                  "Entre ou cadastre-se >"
-                                  : "Sair",
+                        left: 0.0,
+                        bottom: 0.0,
+                        child: ScopedModelDescendant<UserModel>(
+                          builder: (context, child, model) {
+                            return Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: <Widget>[
+                                Text("Olá, ${!model.isLoggedIn() ? "" :
+                                model.userData["name"]}",
                                   style: TextStyle(
-                                      color: Theme.of(context).primaryColor,
-                                      fontSize: 16.0,
+                                      fontSize: 18.0,
                                       fontWeight: FontWeight.bold
                                   ),
                                 ),
-                                onTap: (){
-                                  if(!model.isLoggedIn())
-                                    Navigator.of(context).push(
-                                        MaterialPageRoute(builder: (context)=>LoginScreen())
-                                    );
-                                  else
-                                    model.signOut();
+                                GestureDetector(
+                                  child: Text(
+                                    !model.isLoggedIn() ?
+                                    "Entre ou cadastre-se >"
+                                        : "Sair",
+                                    style: TextStyle(
+                                        color: Theme
+                                            .of(context)
+                                            .primaryColor,
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.bold
+                                    ),
+                                  ),
+                                  onTap: () {
+                                    if (!model.isLoggedIn())
+                                      Navigator.of(context).push(
+                                          MaterialPageRoute(
+                                              builder: (context) =>
+                                                  LoginScreen())
+                                      );
+                                    else
+                                      model.signOut();
                                   },
-                              )
-                            ],
-                          );
-                        },
-                      )
+                                )
+                              ],
+                            );
+                          },
+                        )
                     )
                   ],
                 ),
@@ -100,7 +107,8 @@ class CustomDrawer extends StatelessWidget {
               DrawerTile(Icons.home, "Início", pageController, 0),
               DrawerTile(Icons.list, "Produtos", pageController, 1),
               DrawerTile(Icons.location_on, "Lojas", pageController, 2),
-              DrawerTile(Icons.playlist_add_check, "Meus Pedidos", pageController, 3),
+              DrawerTile(
+                  Icons.playlist_add_check, "Meus Pedidos", pageController, 3),
             ],
           )
         ],
