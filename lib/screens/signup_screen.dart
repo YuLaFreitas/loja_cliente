@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/models/user_model.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -13,7 +11,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final _nameController = TextEditingController();
   final _emailController = TextEditingController();
-  final _passController = TextEditingController();
+  final _senhaController = TextEditingController();
+  //final _senhaController2 = TextEditingController();
+  //String endereco, senha, email, nome;
   final _addressController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
@@ -44,6 +44,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     validator: (text){
                       if(text.isEmpty) return "Nome Inválido!";
+    //                  nome = text;
                     },
                   ),
                   SizedBox(height: 16.0,),
@@ -54,20 +55,36 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (text){
-                      if(text.isEmpty || !text.contains("@")) return "E-mail inválido!";
+                      if(text.isEmpty || text.contains(" ") || !text.contains("@") || !text.contains(".") || text.length < 6)
+                        return "E-mail inválido!";
+      //                email = text;
                     },
                   ),
                   SizedBox(height: 16.0,),
                   TextFormField(
-                    controller: _passController,
+                    controller: _senhaController,
                     decoration: InputDecoration(
                         hintText: "Senha"
                     ),
                     obscureText: true,
                     validator: (text){
-                      if(text.isEmpty || text.length < 6) return "Senha inválida!";
+                      if(text.isEmpty || text.length < 6)
+                        return "Senha inválida!";
+        //              senha = text;
+                      //else controle = text;
                     },
                   ),
+                  /*SizedBox(height: 16.0,),
+                  TextFormField(
+                    controller: _senhaController2,
+                    decoration: InputDecoration(
+                        hintText: "Conferir senha"
+                    ),
+                    obscureText: true,
+                    validator: (text){
+                      if(text != controle) return "Para sua segurança, repita sua senha";
+                    },
+                  ),*/
                   SizedBox(height: 16.0,),
                   TextFormField(
                     controller: _addressController,
@@ -75,7 +92,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         hintText: "Endereço"
                     ),
                     validator: (text){
-                      if(text.isEmpty) return "Endereço inválido!";
+                      if(text.isEmpty || text.length < 10)
+                        return "Precisamos de mais detalhes";
+          //            endereco = text;
                     },
                   ),
                   SizedBox(height: 16.0,),
@@ -91,16 +110,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       color: Theme.of(context).primaryColor,
                       onPressed: (){
                         if(_formKey.currentState.validate()){
-
                           Map<String, dynamic> userData = {
-                            "nome": _nameController.text,
-                            "email": _emailController.text,
-                            "endereco": _addressController.text
+                            "nome":
+                            //nome,
+                            _nameController.text,
+                            "email":
+                            //email,
+                            _emailController.text,
+                            "endereco":
+                            //endereco,
+                            _addressController.text,
                           };
-
                           model.signUp(
                               userData: userData,
-                              pass: _passController.text,
+                              senha:
+                              //senha,
+                              _senhaController.text,
                               onSuccess: _onSuccess,
                               onFail: _onFail
                           );

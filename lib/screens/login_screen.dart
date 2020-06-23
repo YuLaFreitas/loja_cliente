@@ -34,7 +34,8 @@ class _LoginScreenState extends State<LoginScreen> {
               textColor: Colors.white,
               onPressed: (){
                 Navigator.of(context).pushReplacement(
-                    MaterialPageRoute(builder: (context)=>SignUpScreen())
+                    MaterialPageRoute(builder: (context)=>SignUpScreen()
+                    )
                 );
               },
             )
@@ -112,15 +113,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       textColor: Colors.white,
                       color: Theme.of(context).primaryColor,
                       onPressed: (){
-                        if(_formKey.currentState.validate()){
-
+                        if(_formKey.currentState.validate()) {
+                          model.signIn(
+                              email: _emailController.text.toLowerCase(),
+                              senha: _passController.text.toLowerCase(),
+                              onSuccess: _onSuccess,
+                              onFail: _onFail
+                          );
                         }
-                        model.signIn(
-                            email: _emailController.text,
-                            pass: _passController.text,
-                            onSuccess: _onSuccess,
-                            onFail: _onFail
-                        );
                       },
                     ),
                   ),

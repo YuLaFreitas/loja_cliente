@@ -14,15 +14,17 @@ class ProductData {
 
   List img;
   List tam;
+  List cor;
 
   ProductData.fromDocument(DocumentSnapshot snapshot){
     id = snapshot.documentID;
     titulo = snapshot.data["titulo"];
     descricao = snapshot.data["descricao"];
-    valor = snapshot.data["valor"];
-    valor.floorToDouble();// testar = ##,##
+    valor = snapshot.data["valor"] + 00.00;
+    valor.floorToDouble();
     img = snapshot.data["img"];
     tam = snapshot.data["tam"];
+    cor = snapshot.data["cor"];
   }
 
   Map<String, dynamic> toResumedMap(){

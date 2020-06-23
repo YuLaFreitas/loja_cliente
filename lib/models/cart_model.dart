@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:loja_virtual/datas/cart_product.dart';
 import 'package:loja_virtual/models/user_model.dart';
@@ -29,7 +27,7 @@ class CartModel extends Model {
   void addCartItem(CartProduct cartProduct){
     products.add(cartProduct);
 
-    Firestore.instance.collection("usuarios").document(user.firebaseUser.uid)
+    Firestore.instance.collection("usuario").document(user.firebaseUser.uid)
       .collection("cart").add(cartProduct.toMap()).then((doc){
         cartProduct.cid = doc.documentID;
     });
@@ -38,7 +36,7 @@ class CartModel extends Model {
   }
 
   void removeCartItem(CartProduct cartProduct){
-    Firestore.instance.collection("usuarios").document(user.firebaseUser.uid)
+    Firestore.instance.collection("usuario").document(user.firebaseUser.uid)
         .collection("cart").document(cartProduct.cid).delete();
 
     products.remove(cartProduct);
@@ -49,7 +47,7 @@ class CartModel extends Model {
   void decProduct(CartProduct cartProduct){
     cartProduct.quantity--;
 
-    Firestore.instance.collection("usuarios").document(user.firebaseUser.uid).collection("cart")
+    Firestore.instance.collection("usuario").document(user.firebaseUser.uid).collection("cart")
       .document(cartProduct.cid).updateData(cartProduct.toMap());
 
     notifyListeners();
@@ -58,7 +56,8 @@ class CartModel extends Model {
   void incProduct(CartProduct cartProduct){
     cartProduct.quantity++;
 
-    Firestore.instance.collection("usuarios").document(user.firebaseUser.uid).collection("cart")
+    Firestore.instance.collection("usuario").document(user.firebaseUser.uid)
+        .collection("cart")
         .document(cartProduct.cid).updateData(cartProduct.toMap());
 
     notifyListeners();
@@ -112,14 +111,14 @@ class CartModel extends Model {
       }
     );
 
-    await Firestore.instance.collection("usuarios").document(user.firebaseUser.uid)
+    await Firestore.instance.collection("usuario").document(user.firebaseUser.uid)
       .collection("orders").document(refOrder.documentID).setData(
       {
         "orderId": refOrder.documentID
       }
     );
 
-    QuerySnapshot query = await Firestore.instance.collection("usuarios").document(user.firebaseUser.uid)
+    QuerySnapshot query = await Firestore.instance.collection("usuario").document(user.firebaseUser.uid)
       .collection("cart").getDocuments();
 
     for(DocumentSnapshot doc in query.documents){
@@ -139,7 +138,8 @@ class CartModel extends Model {
 
   void _loadCartItems() async {
 
-    QuerySnapshot query = await Firestore.instance.collection("usuarios").document(user.firebaseUser.uid).collection("cart")
+    QuerySnapshot query = await Firestore.instance.collection("usuario")
+        .document(user.firebaseUser.uid).collection("cart")
         .getDocuments();
 
     products = query.documents.map((doc) => CartProduct.fromDocument(doc)).toList();

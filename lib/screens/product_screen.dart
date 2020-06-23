@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:loja_virtual/datas/cart_product.dart';
 import 'package:loja_virtual/datas/product_data.dart';
@@ -27,8 +28,9 @@ class _ProductScreenState extends State<ProductScreen> {
 
   @override
   Widget build(BuildContext context) {
-
-    final Color primaryColor = Theme.of(context).primaryColor;
+    final Color primaryColor = Theme
+        .of(context)
+        .primaryColor;
 
     return Scaffold(
       appBar: AppBar(
@@ -40,7 +42,7 @@ class _ProductScreenState extends State<ProductScreen> {
           AspectRatio(
             aspectRatio: 0.9,
             child: Carousel(
-              images: product.img.map((url){
+              images: product.img.map((url) {
                 return NetworkImage(url);
               }).toList(),
               dotSize: 4.0,
@@ -59,70 +61,58 @@ class _ProductScreenState extends State<ProductScreen> {
                 Text(
                   product.titulo,
                   style: TextStyle(
-                    fontSize: 20.0,
-                    fontWeight: FontWeight.w500
+                      fontSize: 20.0,
+                      fontWeight: FontWeight.w500
                   ),
                   maxLines: 3,
                 ),
                 Text(
                   "R\$ ${product.valor.toStringAsFixed(2)}",
                   style: TextStyle(
-                    fontSize: 22.0,
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor
+                      fontSize: 22.0,
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor
                   ),
                 ),
+                SizedBox(height: 16.0,),
+                /*Text(
+                  "Descrição",
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500
+                  ),
+                ),*/
+                Text(
+                  product.descricao,
+                  style: TextStyle(
+                      fontSize: 16.0
+                  ),
+                ),
+                tamanho(),
                 SizedBox(height: 16.0,),
                 Text(
                   "Tamanho",
                   style: TextStyle(
-                    fontSize: 16.0,
-                    fontWeight: FontWeight.w500
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500
                   ),
                 ),
-                SizedBox(
-                  height: 34.0,
-                  child: GridView(
-                      padding: EdgeInsets.symmetric(vertical: 4.0),
-                      scrollDirection: Axis.horizontal,
-                      gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 1,
-                          mainAxisSpacing: 8.0,
-                          childAspectRatio: 0.5
-                      ),
-                    children: product.tam.map(
-                      (s){
-                        return GestureDetector(
-                          onTap: (){
-                            setState(() {
-                              size = s;
-                            });
-                          },
-                          child: Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.all(Radius.circular(4.0)),
-                              border: Border.all(
-                                color: s == size ? primaryColor : Colors.grey[500],
-                                width: 3.0
-                              )
-                            ),
-                            width: 50.0,
-                            alignment: Alignment.center,
-                            child: Text(s),
-                          ),
-                        );
-                      }
-                    ).toList(),
+                /*cor(2),
+                SizedBox(height: 16.0,),
+                Text(
+                  "COR",
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontWeight: FontWeight.w500
                   ),
-                ),
+                ),*/
                 SizedBox(height: 16.0,),
                 SizedBox(
                   height: 44.0,
                   child: RaisedButton(
                     onPressed: size != null ?
-                    (){
-                      if(UserModel.of(context).isLoggedIn()){
-
+                        () {
+                      if (UserModel.of(context).isLoggedIn()) {
                         CartProduct cartProduct = CartProduct();
                         cartProduct.size = size;
                         cartProduct.quantity = 1;
@@ -133,37 +123,25 @@ class _ProductScreenState extends State<ProductScreen> {
                         CartModel.of(context).addCartItem(cartProduct);
 
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context)=>CartScreen())
+                            MaterialPageRoute(builder: (context) =>
+                                CartScreen())
                         );
-
                       } else {
                         Navigator.of(context).push(
-                          MaterialPageRoute(builder: (context)=>LoginScreen())
+                            MaterialPageRoute(builder: (context) =>
+                                LoginScreen())
                         );
                       }
                     } : null,
-                    child: Text(UserModel.of(context).isLoggedIn() ? "Adicionar ao Carrinho"
-                      : "Entre para Comprar",
+                    child: Text(UserModel.of(context).isLoggedIn()
+                        ? "Adicionar ao Carrinho"
+                        : "Entre para Comprar",
                       style: TextStyle(fontSize: 18.0),
                     ),
                     color: primaryColor,
                     textColor: Colors.white,
                   ),
                 ),
-                SizedBox(height: 16.0,),
-                Text(
-                  "Descrição",
-                  style: TextStyle(
-                      fontSize: 16.0,
-                      fontWeight: FontWeight.w500
-                  ),
-                ),
-                Text(
-                  product.descricao,
-                  style: TextStyle(
-                    fontSize: 16.0
-                  ),
-                )
               ],
             ),
           )
@@ -171,4 +149,67 @@ class _ProductScreenState extends State<ProductScreen> {
       ),
     );
   }
-}
+
+  Widget tamanho() {
+    return SizedBox(
+      height: 34.0,
+      child: GridView(
+        padding: EdgeInsets.symmetric(vertical: 4.0),
+        scrollDirection: Axis.horizontal,
+        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 1,
+            mainAxisSpacing: 8.0,
+            childAspectRatio: 0.5
+        ),
+        children: product.tam.map(
+                (s) {
+              return GestureDetector(
+                onTap: () {
+                  setState(() {
+                    size = s;
+                  });
+                },
+                child: Container(
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                      border: Border.all(
+                          color: s == size ? Colors.green : Colors.grey[500],
+                          width: 3.0
+                      )
+                  ),
+                  width: 50.0,
+                  alignment: Alignment.center,
+                  child: Text(s),
+                ),
+              );
+            }
+        ).toList(),
+      ),
+    );
+  }
+/*
+  Widget cor(int i) {
+    return SizedBox(
+        height: 40.0,
+        child:
+    )
+
+ <Widget>[
+              Container(
+                  decoration:
+                  BoxDecoration(
+                      borderRadius: BorderRadius.all(Radius.circular(4.0)),
+                      border: Border.all(
+                         color: Colors.black ,
+                          width: 3.0
+                      ),
+                   color: Color.fromARGB(250,
+                       product.cor[i]["r"].hashCode,
+                       product.cor[i]["g"].hashCode,
+                       product.cor[i]["b"].hashCode)
+                  ),
+                  );
+                  width: 50.0,
+                  alignment: Alignment.center,
+    ]}),*/
+  }

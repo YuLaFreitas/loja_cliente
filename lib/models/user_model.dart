@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:scoped_model/scoped_model.dart';
@@ -10,6 +8,7 @@ class UserModel extends Model {
   FirebaseAuth _auth = FirebaseAuth.instance;
 
   FirebaseUser firebaseUser;
+
   Map<String, dynamic> userData = Map();
 
   bool isLoading = false;
@@ -24,7 +23,7 @@ class UserModel extends Model {
     _loadCurrentUser();
   }
 
-  void signUp({@required Map<String, dynamic> userData, @required String pass,
+  void signUp({@required Map<String, dynamic> userData, @required String senha,
       @required VoidCallback onSuccess, @required VoidCallback onFail}){
 
     isLoading = true;
@@ -32,15 +31,16 @@ class UserModel extends Model {
 
     _auth.createUserWithEmailAndPassword(
         email: userData["email"],
-        password: pass
-    ).then((user) async {
-      firebaseUser = user;
+        password: senha
+    ).then((usuario) async {
+      firebaseUser = usuario;
 
       await _saveUserData(userData);
 
       onSuccess();
       isLoading = false;
       notifyListeners();
+
     }).catchError((e){
       onFail();
       isLoading = false;
@@ -49,13 +49,19 @@ class UserModel extends Model {
 
   }
 
-  void signIn({@required String email, @required String pass,
+  Future<Null> _saveUserData(Map<String, dynamic> userData) async {
+    this.userData = userData;
+    await Firestore.instance.collection("usuario")
+        .document(firebaseUser.uid).setData(userData);
+  }
+
+  void signIn({@required String email, @required String senha,
       @required VoidCallback onSuccess, @required VoidCallback onFail}) async {
 
     isLoading = true;
     notifyListeners();
 
-    _auth.signInWithEmailAndPassword(email: email, password: pass).then(
+    _auth.signInWithEmailAndPassword(email: email, password: senha).then(
       (user) async {
         firebaseUser = user;
 
@@ -90,18 +96,14 @@ class UserModel extends Model {
     return firebaseUser != null;
   }
 
-  Future<Null> _saveUserData(Map<String, dynamic> userData) async {
-    this.userData = userData;
-    await Firestore.instance.collection("usarios").document(firebaseUser.uid).setData(userData);
-  }
-
   Future<Null> _loadCurrentUser() async {
     if(firebaseUser == null)
       firebaseUser = await _auth.currentUser();
     if(firebaseUser != null){
       if(userData["nome"] == null){
         DocumentSnapshot docUser =
-          await Firestore.instance.collection("usarios").document(firebaseUser.uid).get();
+          await Firestore.instance.collection("usuario")
+              .document(firebaseUser.uid).get();
         userData = docUser.data;
       }
     }
